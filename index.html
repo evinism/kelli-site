@@ -1,0 +1,127 @@
+<html>
+  <head>
+    <title>Server Annihilator</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css?family=Courgette" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Vibur" rel="stylesheet">
+  </head>
+  <body>
+    <div class="background-container">
+      <div class="background">
+        <svg class="background-svg" width="120" height="120" viewBox="-120 -120 240 240" xmlns="http://www.w3.org/2000/svg">
+          <polygon points="0,0 100,-20 100,20"/>
+          <polygon points="0,0 100,-20 100,20" transform="rotate(45)" />
+          <polygon points="0,0 100,-20 100,20" transform="rotate(90)" />
+          <polygon points="0,0 100,-20 100,20" transform="rotate(135)" />
+          <polygon points="0,0 100,-20 100,20" transform="rotate(180)" />
+          <polygon points="0,0 100,-20 100,20" transform="rotate(225)" />
+          <polygon points="0,0 100,-20 100,20" transform="rotate(270)" />
+          <polygon points="0,0 100,-20 100,20" transform="rotate(315)" />
+        </svg>
+      </div>
+    </div>
+    <div id="loading">
+      <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="40px" height="40px" viewBox="0 0 50 50" xml:space="preserve">
+        <path fill="#000" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(250 25 25)"></path>
+    </svg>
+    </div>
+    <div id="content">
+      <header>
+        <h1>
+          <span class="kelli-name">Kelli Kearns:</span>
+          <span class="kelli-title">Server Annihilator</span>
+        </h1>
+        <nav>
+          <a href="https://github.com/kellikearns">github</a>
+          <a href="https://github.com/kellikearns">twitter</a>
+          <a href="https://github.com/kellikearns">kanye</a>
+        </nav>
+      </header>
+      <img class="flame" src="flame-cropped-min.png"></img>
+      <img class="pile-of-computers" src="ewaste-cropped-min.png"></img>
+      <img class="kelli" src="royalty-cropped-min.png"></img>
+    </div>
+    <div id="confetti-container"></div>
+    <script>
+      var imagesCount = 0;
+      var loadedCount = 0;
+
+      waitFor(document.images[0]);
+      waitFor(document.images[1]);
+      waitFor(document.images[2]);
+
+      function waitFor(image){
+        imagesCount++;
+        image.onload = function(){
+          loadedCount++;
+          if(loadedCount === imagesCount && !loadFired){
+            onImagesLoad();
+          }
+        }
+        if (image.complete) {
+          image.onload();
+        }
+      };
+
+      var loadFired = false;
+
+      function onImagesLoad(){
+        if(!loadFired){
+          loadFired = true;
+          document.getElementById('content').style.display = "block";
+          document.getElementById('loading').className = "hidden";
+
+          // initialize confetti junk
+          var confettiLikelihood = 0.2;
+          setInterval(function(){
+            if (Math.random() < confettiLikelihood){
+              makeAConfetti();
+            }
+          }, 10);
+        }
+      }
+
+      function getRandom(arr){
+        return arr[Math.floor(Math.random() * arr.length)];
+      }
+
+      // def going overboard on this.
+      var confettiContainer = document.getElementById('confetti-container');
+      var confettiShapes = [
+        '<svg width="10" height="10" viewbox="0 0 10 10"><polygon points="0,0 5,0 8,9"/></svg>',
+        '<svg width="10" height="10" viewbox="0 0 10 10"><polygon points="1,1 7,0 6,6 0,7"/></svg>',
+        '<svg width="10" height="10" viewbox="0 0 10 10"><polygon points="0,0 6,6 9,0"/></svg>',
+
+      ];
+
+      var colorList = [
+        "blue",
+        "red",
+        "pink",
+        "orange",
+        "purple",
+        "lightblue",
+      ];
+
+      function makeAConfetti(){
+        var shapeIdx = Math.floor(Math.random() * confettiShapes.length);
+        var shape = document.createElement('div');
+        var animSpeed = Math.floor(Math.random() * 15 + 15);
+
+        shape.innerHTML = getRandom(confettiShapes);
+        shape.style.top = 60;
+        shape.style.left = Math.floor(Math.random() * 100) + '%';
+        shape.style.fill = getRandom(colorList);
+        shape.style.animation = 'confetti ' + animSpeed + 's linear';
+        confettiContainer.appendChild(shape);
+        shape.addEventListener('animationend', function(){
+          shape.remove();
+        });
+      }
+
+      // i don't care about duplicates
+      setTimeout(onImagesLoad, 3000);
+
+    </script>
+  </body>
+</html>

@@ -144,20 +144,39 @@ nav a:not(:hover) {
   height: 100%;
   position: absolute;
   top: 0;
-}
-
-#confetti-container > * {
-  position: absolute;
-  /*animation: confetti 10s linear;*/
+  opacity: 0.8;
+  perspective: 1000px;
 }
 
 @keyframes confetti {
   0% {
     top: 0;
-    transform: rotate(0);
+    transform: rotateZ(0) rotateX(0);
   }
   100% {
     top: 150%;
-    transform: rotate(2000deg);
+    transform: rotateZ(2000deg) rotateX(600deg);
+  }
+}
+
+@keyframes confetti2 {
+  0% {
+    top: 0;
+    transform: rotateZ(0) rotateX(0) rotateY(0);
+  }
+  100% {
+    top: 150%;
+    transform: rotateZ(1500deg) rotateX(200deg) rotateY(500deg);
+  }
+}
+
+@keyframes confetti3 {
+  0% {
+    top: 0;
+    transform: rotateZ(0) rotateX(0) rotateY(0);
+  }
+  100% {
+    top: 150%;
+    transform: rotateZ(-1000deg) rotateX(-800deg) rotateY(200deg);
   }
 }

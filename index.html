@@ -72,7 +72,7 @@
           document.getElementById('loading').className = "hidden";
 
           // initialize confetti junk
-          var confettiLikelihood = 0.4;
+          var confettiLikelihood = 0.2;
           setInterval(function(){
             if (!document.hidden && Math.random() < confettiLikelihood){
               makeAConfetti();
@@ -103,12 +103,6 @@
         "lightblue",
       ];
 
-      var animTypes = [
-        'confetti',
-        'confetti2',
-        'confetti3',
-      ]
-
       function makeAConfetti(){
         var confettiBaseSpeed = 30;
         var shapeIdx = Math.floor(Math.random() * confettiShapes.length);
@@ -120,8 +114,8 @@
         shape.style.top = 60;
         shape.style.left = Math.floor(Math.random() * 100) + '%';
         shape.style.fill = getRandom(colorList);
-        shape.style.width = (confettiBaseSpeed / (animSpeed)) * 15;
-        shape.style.animation = getRandom(animTypes) + ' ' + animSpeed + 's linear';
+        shape.style.width = (confettiBaseSpeed / (animSpeed)) * 13;
+        shape.style.animation = 'confetti ' + animSpeed + 's linear';
         confettiContainer.appendChild(shape);
         shape.addEventListener('animationend', function(){
           shape.remove();

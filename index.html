@@ -40,21 +40,25 @@
       <img class="flame" src="flame-cropped-min.png"></img>
       <img class="pile-of-computers" src="ewaste-cropped-min.png"></img>
       <img class="kelli" src="royalty-cropped-min.png"></img>
+      <img class="crown" src="crown-cropped.png"></img>
     </div>
     <div id="confetti-container"></div>
     <script>
       var imagesCount = 0;
       var loadedCount = 0;
+      var loadFired = false;
+      var confettiPredelay = 800;
 
       waitFor(document.images[0]);
       waitFor(document.images[1]);
       waitFor(document.images[2]);
+      waitFor(document.images[3]);
 
       function waitFor(image){
         imagesCount++;
         image.onload = function(){
           loadedCount++;
-          if(loadedCount === imagesCount && !loadFired){
+          if(loadedCount === imagesCount){
             onImagesLoad();
           }
         }
@@ -63,21 +67,22 @@
         }
       };
 
-      var loadFired = false;
-
       function onImagesLoad(){
-        if(!loadFired){
+        if (!loadFired) {
           loadFired = true;
           document.getElementById('content').style.display = "block";
-          document.getElementById('loading').className = "hidden";
+          setTimeout(
+            function(){
+              initializeConfetti(document.getElementById('confetti-container'));
+            },
+            confettiPredelay
+          )
 
-          // initialize confetti junk
-          var confettiLikelihood = 0.2;
-          setInterval(function(){
-            if (!document.hidden && Math.random() < confettiLikelihood){
-              makeAConfetti();
-            }
-          }, 10);
+          loadingElem = document.getElementById('loading');
+          loadingElem.className = "hidden";
+          setTimeout(function(){
+            loadingElem.remove();
+          }, 500);
         }
       }
 
@@ -86,7 +91,6 @@
       }
 
       // def going overboard on this.
-      var confettiContainer = document.getElementById('confetti-container');
       var confettiShapes = [
         '<svg width="10" height="10" viewbox="0 0 10 10"><polygon points="0,0 5,0 8,9"/></svg>',
         '<svg width="10" height="10" viewbox="0 0 10 10"><polygon points="1,1 7,0 6,6 0,7"/></svg>',
@@ -103,8 +107,20 @@
         "lightblue",
       ];
 
+      var confettiContainer;
+
+      function initializeConfetti(target){
+        confettiContainer = target;
+        var confettiLikelihood = 0.15;
+        setInterval(function(){
+          if (!document.hidden && Math.random() < confettiLikelihood){
+            makeAConfetti();
+          }
+        }, 10);
+      }
+
       function makeAConfetti(){
-        var confettiBaseSpeed = 30;
+        var confettiBaseSpeed = 25;
         var shapeIdx = Math.floor(Math.random() * confettiShapes.length);
         var shape = document.createElement('div');
         var animSpeed = Math.floor(Math.random() * confettiBaseSpeed / 2 + confettiBaseSpeed / 2);

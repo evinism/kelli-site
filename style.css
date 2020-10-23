@@ -10,15 +10,17 @@ body {
 }
 
 .background {
-  position: relative;
+  position: absolute;
   width: 4000%;
   height: 4000%;
-  left: -1950%;
-  top: -1890%;
+  left: 50%;
+  top: 105%;
+  transform: translate(-50%, -50%);
 }
 
 .background-svg {
-  animation:spin 30s linear infinite;
+  position: absolute;
+  animation: spin 30s linear infinite;
   width: 100%;
   height: 100%;
   background-color: lightpink;
